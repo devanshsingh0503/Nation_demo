@@ -103,38 +103,59 @@ export default function Navigation() {
             <span aria-hidden="true">→</span>
           </Link>
 
-          {/* Mobile menu toggle */}
-          <details
-            className="nav-disclosure ml-auto md:hidden"
-            open={mobileOpen}
-            onToggle={(e) => setMobileOpen((e.target as HTMLDetailsElement).open)}
-          >
-            <summary className="nav-toggle h-control-sm w-control-sm flex cursor-pointer list-none items-center justify-center">
-              <span className="sr-only">Menu</span>
-              <span className="nav-burger" aria-hidden="true" />
-            </summary>
-            <div className="nav-drawer">
-              <div className="nav-drawer-panel bg-base" data-theme="dark">
-                <div className="container-main pt-section-nav pb-xl">
-                  <ul className="list-bare gap-lg flex flex-col">
-                    {[
-                      { href: '/work', label: 'Stores' },
-                      { href: '/#services', label: 'Platform' },
-                      { href: '/#approach', label: 'Mission' },
-                      { href: '/#process', label: 'How it works' },
-                      { href: '/contact', label: 'Start a store' },
-                    ].map((item, i) => (
-                      <li key={item.href} className="nav-drawer-item" style={{ '--i': i } as any}>
-                        <Link href={item.href} className="text-h3 text-primary" onClick={() => setMobileOpen(false)}>
-                          {item.label}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
+          {/* Mobile Right Controls: CTA button + Hamburger toggle */}
+          <div className="flex items-center gap-xs ml-auto md:hidden">
+            <Link
+              href="/contact"
+              className="btn-compact inline-flex items-center justify-center border bg-accent text-on-accent border-accent hover:bg-transparent hover:text-accent gap-xs h-[2.125rem] px-3 text-xs font-medium rounded-sm whitespace-nowrap"
+            >
+              <span>Start a store</span>
+              <span aria-hidden="true">→</span>
+            </Link>
+
+            <details
+              className="nav-disclosure"
+              open={mobileOpen}
+              onToggle={(e) => setMobileOpen((e.target as HTMLDetailsElement).open)}
+            >
+              <summary className="nav-toggle h-control-sm w-control-sm flex cursor-pointer list-none items-center justify-center">
+                <span className="sr-only">Menu</span>
+                <span className="nav-burger" aria-hidden="true" />
+              </summary>
+              <div className="nav-drawer">
+                <div className="nav-drawer-panel bg-base" data-theme="dark">
+                  <div className="container-main pt-[5.5rem] pb-xl">
+                    <ul className="list-bare gap-lg flex flex-col">
+                      {[
+                        { href: '/work', label: 'Stores' },
+                        { href: '/#services', label: 'Platform' },
+                        { href: '/#approach', label: 'Mission' },
+                        { href: '/#process', label: 'How it works' },
+                      ].map((item, i) => (
+                        <li key={item.href} className="nav-drawer-item" style={{ '--i': i } as any}>
+                          <Link href={item.href} className="text-h3 text-primary hover:text-accent transition-colors" onClick={() => setMobileOpen(false)}>
+                            {item.label}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+
+                    {/* Dedicated CTA Button inside Mobile Menu */}
+                    <div className="nav-drawer-item mt-xl pt-lg border-t border-line" style={{ '--i': 4 } as any}>
+                      <Link
+                        href="/contact"
+                        onClick={() => setMobileOpen(false)}
+                        className="btn-compact w-full inline-flex items-center justify-center border bg-accent text-on-accent border-accent hover:bg-transparent hover:text-accent gap-xs h-[3rem] px-md text-base font-medium rounded-sm"
+                      >
+                        <span>Start a store</span>
+                        <span aria-hidden="true">→</span>
+                      </Link>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-          </details>
+            </details>
+          </div>
         </nav>
       </div>
     </header>
