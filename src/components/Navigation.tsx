@@ -144,18 +144,6 @@ export default function Navigation() {
                       </li>
                     ))}
                   </ul>
-
-                  {/* Dedicated CTA Button inside Mobile Menu */}
-                  <div className="nav-drawer-item mt-xl pt-lg border-t border-line" style={{ '--i': 4 } as any}>
-                    <Link
-                      href="/contact"
-                      onClick={() => setMobileOpen(false)}
-                      className="btn-compact w-full inline-flex items-center justify-center border bg-accent text-on-accent border-accent hover:bg-transparent hover:text-accent gap-xs h-[3rem] px-md text-base font-medium rounded-sm"
-                    >
-                      <span>Start a store</span>
-                      <span aria-hidden="true">→</span>
-                    </Link>
-                  </div>
                 </div>
               </div>
             </div>
