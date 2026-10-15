@@ -10,7 +10,7 @@ export default function Navigation() {
   const pathname = usePathname()
   const isHome = pathname === '/'
 
-  useNavMorph()
+  useNavMorph(pathname)
 
   const handleShuffle = (e: React.MouseEvent<HTMLElement> | React.FocusEvent<HTMLElement>) => {
     const chars = 'abcdefghijklmnopqrstuvwxyz'
@@ -59,7 +59,7 @@ export default function Navigation() {
             data-nav-logo
             data-bleed
           >
-            <span className="nav-logo-mark" data-nav-logo-mark>
+            <span key={pathname} className="nav-logo-mark" data-nav-logo-mark>
               <NationLogo className="h-auto w-full text-primary block" role="presentation" ariaHidden={true} />
               {isHome && (
                 <span className="nav-logo-marks corner-marks corner-marks-masthead" aria-hidden="true" data-nav-logo-marks />
@@ -103,59 +103,63 @@ export default function Navigation() {
             <span aria-hidden="true">→</span>
           </Link>
 
-          {/* Mobile Right Controls: CTA button + Hamburger toggle */}
-          <div className="flex items-center gap-xs ml-auto md:hidden">
-            <Link
-              href="/contact"
-              className="btn-compact inline-flex items-center justify-center border bg-accent text-on-accent border-accent hover:bg-transparent hover:text-accent gap-xs h-[2.125rem] px-3 text-xs font-medium rounded-sm whitespace-nowrap"
-            >
-              <span>Start a store</span>
-              <span aria-hidden="true">→</span>
-            </Link>
+          {/* Mobile menu toggle (No Start a store in top bar) */}
+          <details
+            className="nav-disclosure ml-auto md:hidden"
+            open={mobileOpen}
+            onToggle={(e) => setMobileOpen((e.target as HTMLDetailsElement).open)}
+          >
+            <summary className="nav-toggle h-control-sm w-control-sm flex cursor-pointer list-none items-center justify-center">
+              <span className="sr-only">Menu</span>
+              <span className="nav-burger" aria-hidden="true" />
+            </summary>
+            <div className="nav-drawer">
+              <div className="nav-drawer-panel bg-base" data-theme="dark">
+                <div className="container-main pt-[4.5rem] pb-xl">
+                  {/* Back button at the top of the mobile dropdown */}
+                  <div className="pb-md mb-md border-b border-line flex items-center justify-between">
+                    <button
+                      type="button"
+                      onClick={() => setMobileOpen(false)}
+                      className="inline-flex items-center gap-xs text-sm font-medium text-secondary hover:text-primary transition-colors py-1 cursor-pointer bg-transparent border-0"
+                      aria-label="Back"
+                    >
+                      <span aria-hidden="true" className="text-base leading-none">←</span>
+                      <span>Back</span>
+                    </button>
+                    <span className="text-meta text-tertiary font-mono text-xs uppercase tracking-wider">Menu</span>
+                  </div>
 
-            <details
-              className="nav-disclosure"
-              open={mobileOpen}
-              onToggle={(e) => setMobileOpen((e.target as HTMLDetailsElement).open)}
-            >
-              <summary className="nav-toggle h-control-sm w-control-sm flex cursor-pointer list-none items-center justify-center">
-                <span className="sr-only">Menu</span>
-                <span className="nav-burger" aria-hidden="true" />
-              </summary>
-              <div className="nav-drawer">
-                <div className="nav-drawer-panel bg-base" data-theme="dark">
-                  <div className="container-main pt-[5.5rem] pb-xl">
-                    <ul className="list-bare gap-lg flex flex-col">
-                      {[
-                        { href: '/work', label: 'Stores' },
-                        { href: '/#services', label: 'Platform' },
-                        { href: '/#approach', label: 'Mission' },
-                        { href: '/#process', label: 'How it works' },
-                      ].map((item, i) => (
-                        <li key={item.href} className="nav-drawer-item" style={{ '--i': i } as any}>
-                          <Link href={item.href} className="text-h3 text-primary hover:text-accent transition-colors" onClick={() => setMobileOpen(false)}>
-                            {item.label}
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
+                  <ul className="list-bare gap-lg flex flex-col">
+                    {[
+                      { href: '/work', label: 'Stores' },
+                      { href: '/#services', label: 'Platform' },
+                      { href: '/#approach', label: 'Mission' },
+                      { href: '/#process', label: 'How it works' },
+                    ].map((item, i) => (
+                      <li key={item.href} className="nav-drawer-item" style={{ '--i': i } as any}>
+                        <Link href={item.href} className="text-h3 text-primary hover:text-accent transition-colors" onClick={() => setMobileOpen(false)}>
+                          {item.label}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
 
-                    {/* Dedicated CTA Button inside Mobile Menu */}
-                    <div className="nav-drawer-item mt-xl pt-lg border-t border-line" style={{ '--i': 4 } as any}>
-                      <Link
-                        href="/contact"
-                        onClick={() => setMobileOpen(false)}
-                        className="btn-compact w-full inline-flex items-center justify-center border bg-accent text-on-accent border-accent hover:bg-transparent hover:text-accent gap-xs h-[3rem] px-md text-base font-medium rounded-sm"
-                      >
-                        <span>Start a store</span>
-                        <span aria-hidden="true">→</span>
-                      </Link>
-                    </div>
+                  {/* Dedicated CTA Button inside Mobile Menu */}
+                  <div className="nav-drawer-item mt-xl pt-lg border-t border-line" style={{ '--i': 4 } as any}>
+                    <Link
+                      href="/contact"
+                      onClick={() => setMobileOpen(false)}
+                      className="btn-compact w-full inline-flex items-center justify-center border bg-accent text-on-accent border-accent hover:bg-transparent hover:text-accent gap-xs h-[3rem] px-md text-base font-medium rounded-sm"
+                    >
+                      <span>Start a store</span>
+                      <span aria-hidden="true">→</span>
+                    </Link>
                   </div>
                 </div>
               </div>
-            </details>
-          </div>
+            </div>
+          </details>
         </nav>
       </div>
     </header>

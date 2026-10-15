@@ -1,8 +1,23 @@
 'use client'
 import { useEffect } from 'react'
 
-export function useNavMorph() {
+export function useNavMorph(pathname?: string) {
   useEffect(() => {
+    // If not on homepage, completely reset any logo mark or nav item transforms and return
+    if (pathname && pathname !== '/') {
+      const navLogoMark = document.querySelector<HTMLElement>('[data-nav-logo-mark]')
+      if (navLogoMark) navLogoMark.style.cssText = ''
+      const navLogoMarks = document.querySelector<HTMLElement>('[data-nav-logo-marks]')
+      if (navLogoMarks) navLogoMarks.style.cssText = ''
+      const navItems = Array.from(document.querySelectorAll<HTMLElement>('[data-nav-item]'))
+      navItems.forEach((el) => {
+        el.style.transform = ''
+      })
+      const nav = document.querySelector<HTMLElement>('.site-nav')
+      if (nav) nav.dataset.theme = 'light'
+      return
+    }
+
     let cleanFn: (() => void) | undefined
     let retries = 0
 
@@ -132,6 +147,9 @@ export function useNavMorph() {
       document.fonts?.ready?.then(init)
 
       cleanFn = () => {
+        resetStyles()
+        if (morphSource) morphSource.style.visibility = ''
+        if (morphMarks) morphMarks.style.visibility = ''
         window.removeEventListener('scroll', requestFrame)
         window.removeEventListener('resize', init)
         reducedMotion.removeEventListener('change', init)
@@ -143,5 +161,5 @@ export function useNavMorph() {
     return () => {
       if (cleanFn) cleanFn()
     }
-  }, [])
+  }, [pathname])
 }
