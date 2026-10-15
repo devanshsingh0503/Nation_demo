@@ -109,7 +109,7 @@ export default function WorkShowcase() {
           }
         }
       },
-      { rootMargin: '-50% 0px -50% 0px' }
+      { rootMargin: '-20% 0px -20% 0px' }
     )
 
     mediaRefs.current.forEach((el) => el && observer.observe(el))
@@ -122,8 +122,11 @@ export default function WorkShowcase() {
         <div className="work" style={{ '--cases': 3 } as any}>
           {/* Aside with stacked info */}
           <div className="work-aside">
-            <h2 className="work-label text-eyebrow bracketed">The Three Pillars</h2>
-            <div className="work-stack" style={{ minHeight: '12rem' }}>
+            <div className="flex items-center justify-between">
+              <h2 className="work-label text-eyebrow bracketed">The Three Pillars</h2>
+              <span className="text-meta text-tertiary font-mono" aria-hidden="true">{`0${activeIndex + 1} / 03`}</span>
+            </div>
+            <div className="work-stack" style={{ minHeight: '10rem' }}>
               {CASES.map((c, i) => (
                 <div
                   key={c.id}

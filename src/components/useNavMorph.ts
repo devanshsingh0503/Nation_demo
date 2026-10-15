@@ -26,8 +26,7 @@ export function useNavMorph() {
       const navLogoMarks = nav.querySelector<HTMLElement>('[data-nav-logo-marks]')
 
       const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
-      const minWidth48 = window.matchMedia('(min-width: 48rem)')
-      const isMobileOrReduced = () => reducedMotion.matches || !minWidth48.matches
+      const isMobileOrReduced = () => reducedMotion.matches
 
       let initialLefts: number[] = []
       let finalLefts: number[] = []

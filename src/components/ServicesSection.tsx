@@ -79,7 +79,7 @@ export default function ServicesSection() {
 
   useEffect(() => {
     const prefersReduced = matchMedia('(prefers-reduced-motion: reduce)').matches
-    const mediaQuery = matchMedia('(min-width: 62rem) and (min-height: 50rem) and (prefers-reduced-motion: no-preference)')
+    const mediaQuery = matchMedia('(prefers-reduced-motion: no-preference)')
 
     const update = () => {
       rafRef.current = 0
@@ -95,10 +95,11 @@ export default function ServicesSection() {
       const plates = platesRef.current
       const lastPlate = plates[plates.length - 1]
       const parentEl = stack.parentElement
+      const step = window.innerWidth < 768 ? 16 : 24
 
       section.style.setProperty(
         '--plate-spare',
-        `${(parentEl?.clientHeight ?? 0) - stack.offsetTop - (plates.length - 1) * 24 - (lastPlate?.offsetHeight ?? 0)}px`
+        `${(parentEl?.clientHeight ?? 0) - stack.offsetTop - (plates.length - 1) * step - (lastPlate?.offsetHeight ?? 0)}px`
       )
 
       const trackH = track.offsetHeight
@@ -116,7 +117,7 @@ export default function ServicesSection() {
       const scales = plates.map(() => 1)
 
       for (let i = 1; i < plates.length; i++) {
-        const target = i * 24
+        const target = i * step
         offsets[i] = target + (offsets[i - 1] + (plates[i - 1]?.offsetHeight ?? 0) + rowGap - target) * (1 - h[i])
       }
 
